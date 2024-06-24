@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -8,8 +9,14 @@ const Navbar = () => {
     navigate(`/product/search/${searchTerm}`);
     setSearchTerm("");
   };
+
   return (
     <div>
+      <style jsx="true">{`
+        .nav {
+          position: fixed;
+        }
+      `}</style>
       <div className="nav sticky-top">
         <div className="nav_bar">
           <div className="left">
@@ -32,7 +39,9 @@ const Navbar = () => {
             <button className="btn btn-warning mx-3">cart</button>
             <button className="btn btn-warning mx-3">profile</button>
             <button className="btn btn-warning mx-3">login</button>
-            <button className="btn btn-warning mx-3">regsiter</button>
+            <Link to="/register">
+              <button className="btn btn-info mx-3">register</button>
+            </Link>
             <button className="btn btn-warning mx-3">logout</button>
           </div>
         </div>
