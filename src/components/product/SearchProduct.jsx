@@ -14,7 +14,7 @@ const SearchProduct = () => {
   }, [term, products]);
   return (
     <>
-      <div className="container text-center" style={{marginTop:"100px"}}>
+      <div className="container text-center" style={{ marginTop: "120px" }}>
         <div className="container d-flex justify-content-center align-items-center">
           <div className="row container d-flex justify-content-center align-items-center">
             {searchProduct?.map((product) => (

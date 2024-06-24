@@ -22,7 +22,7 @@ const ProductDetail = () => {
   }, [id]);
   return (
     <>
-      <div style={{marginTop:"100px"}}>
+      <div style={{marginTop:"120px"}}>
         <div
           className="container text-center my-5"
           style={{

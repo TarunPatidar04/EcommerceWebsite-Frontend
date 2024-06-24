@@ -26,14 +26,14 @@ const Register = () => {
       email: "",
       password: "",
     });
-    
+
     if (result.success) {
       navigate("/login");
     }
   };
   return (
     <>
-      <div style={{ marginTop: "100px" }}>
+      <div style={{ marginTop: "120px" }}>
         <div
           className="container my-5 p-4"
           style={{

@@ -8,6 +8,7 @@ const AppState = (props) => {
   const [products, setProducts] = useState([]);
   const [token, setToken] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [filterData, setFilterData] = useState([]);
 
   //Get all products
   useEffect(() => {
@@ -18,11 +19,11 @@ const AppState = (props) => {
         },
         withCredentials: true,
       });
-      console.log(api.data.products);
       setProducts(api.data.products);
+      setFilterData(api.data.products);
     };
     fetchProducts();
-  }, []);
+  }, [token]);
 
   //Register user
   const register = async (name, email, password) => {
@@ -85,7 +86,17 @@ const AppState = (props) => {
   return (
     <div>
       <AppContext.Provider
-        value={{ products, register, login, url, isAuthenticated, token }}
+        value={{
+          products,
+          register,
+          login,
+          url,
+          isAuthenticated,
+          setIsAuthenticated,
+          filterData,
+          setFilterData,
+          token,
+        }}
       >
         {props.children}
       </AppContext.Provider>
