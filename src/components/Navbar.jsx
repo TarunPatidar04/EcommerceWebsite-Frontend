@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import AppContext from "../context/AppContext";
 
 const Navbar = () => {
-  const { setFilterData, products, logout } = useContext(AppContext);
+  const { setFilterData, products, logout, isAuthenticated } =
+    useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
@@ -50,23 +51,32 @@ const Navbar = () => {
             />
           </form>
           <div className="right">
-            <button className="btn btn-warning mx-3">cart</button>
-            <button className="btn btn-warning mx-3">profile</button>
-            <Link to="/login">
-              <button className="btn btn-secondary mx-3">login</button>
-            </Link>
-            <Link to="/register">
-              <button className="btn btn-info mx-3">register</button>
-            </Link>
-            <button
-              className="btn btn-danger mx-3"
-              onClick={() => {
-                logout();
-                navigate("/");
-              }}
-            >
-              logout
-            </button>
+            {isAuthenticated && (
+              <>
+                <button className="btn btn-warning mx-3">cart</button>
+                <button className="btn btn-warning mx-3">profile</button>
+                <button
+                  className="btn btn-danger mx-3"
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
+                  logout
+                </button>
+              </>
+            )}
+
+            {!isAuthenticated && (
+              <>
+                <Link to="/login">
+                  <button className="btn btn-secondary mx-3">login</button>
+                </Link>
+                <Link to="/register">
+                  <button className="btn btn-info mx-3">register</button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
         {location.pathname === "/" && (
