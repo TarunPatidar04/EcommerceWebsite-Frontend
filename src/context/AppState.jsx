@@ -9,6 +9,7 @@ const AppState = (props) => {
   const [token, setToken] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [filterData, setFilterData] = useState([]);
+  const [user, setUser] = useState();
 
   //Get all products
   useEffect(() => {
@@ -22,8 +23,18 @@ const AppState = (props) => {
       setProducts(api.data.products);
       setFilterData(api.data.products);
     };
+    userProfile();
     fetchProducts();
   }, [token]);
+
+  useEffect(() => {
+    let istoken = localStorage.getItem("token");
+    //  console.log(lstoken)
+    if (istoken) {
+      setToken(istoken);
+      setIsAuthenticated(true);
+    }
+  });
 
   //Register user
   const register = async (name, email, password) => {
@@ -100,6 +111,19 @@ const AppState = (props) => {
       transition: Bounce,
     });
   };
+
+  //User Profile
+  const userProfile = async () => {
+    const api = await axios.get(`${url}/user/profile`, {
+      headers: {
+        "Content-Type": "application/json",
+        Auth: token,
+      },
+      withCredentials: true,
+    });
+    // console.log(api.data)
+    setUser(api.data.user);
+  };
   return (
     <div>
       <AppContext.Provider
@@ -113,7 +137,8 @@ const AppState = (props) => {
           filterData,
           setFilterData,
           token,
-          logout
+          logout,
+          user,
         }}
       >
         {props.children}
