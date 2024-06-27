@@ -10,6 +10,8 @@ const AppState = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [filterData, setFilterData] = useState([]);
   const [user, setUser] = useState();
+  const [cart, setCart] = useState([]);
+  const [reload, setReload] = useState(false);
 
   //Get all products
   useEffect(() => {
@@ -25,7 +27,8 @@ const AppState = (props) => {
     };
     userProfile();
     fetchProducts();
-  }, [token]);
+    userCart();
+  }, [token, reload]);
 
   useEffect(() => {
     let istoken = localStorage.getItem("token");
@@ -124,6 +127,48 @@ const AppState = (props) => {
     // console.log(api.data)
     setUser(api.data.user);
   };
+
+  //Add to cart
+  const addToCart = async (productId, title, price, qty, imgSrc) => {
+    const api = await axios.post(
+      `${url}/cart/add`,
+      { productId, title, price, qty, imgSrc },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Auth: token,
+        },
+        withCredentials: true,
+      }
+    );
+    // console.log(api);
+    toast.success(api.data.message, {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+  };
+
+  //user Cart
+  const userCart = async () => {
+    const api = await axios.get(`${url}/cart/user`, {
+      headers: {
+        "Content-Type": "application/json",
+        Auth: token,
+      },
+      withCredentials: true,
+    });
+    setReload(!reload);
+    console.log("user cart", api.data.cart);
+    setCart(api.data.cart);
+  };
+
   return (
     <div>
       <AppContext.Provider
@@ -139,6 +184,8 @@ const AppState = (props) => {
           token,
           logout,
           user,
+          addToCart,
+          cart,
         }}
       >
         {props.children}

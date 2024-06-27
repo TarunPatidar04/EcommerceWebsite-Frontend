@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import AppContext from "../context/AppContext";
 
+
 const Navbar = () => {
-  const { setFilterData, products, logout, isAuthenticated } =
+  const { setFilterData, products, logout, isAuthenticated,cart } =
     useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,9 +54,22 @@ const Navbar = () => {
           <div className="right">
             {isAuthenticated && (
               <>
-                <button className="btn btn-warning mx-3">cart</button>
+              <Link to="/cart">
+              <button
+                  type="button"
+                  className="btn btn-primary position-relative mx-3"
+                >
+                  <span className="material-symbols-outlined">
+                    shopping_cart
+                  </span>
+                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {cart?.items?.length}
+                    <span className="visually-hidden">unread messages</span>
+                  </span>
+                </button>
+              </Link>
                 <Link to="/profile">
-                  <button className="btn btn-primary mx-3">profile</button>
+                  <button className="btn btn-info mx-3">profile</button>
                 </Link>
                 <button
                   className="btn btn-danger mx-3"
