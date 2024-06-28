@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/AppContext";
 
 const Cart = () => {
-  const { cart, decreaseQty ,addToCart} = useContext(AppContext);
+  const { cart, decreaseQty, addToCart, removeFromCart } =
+    useContext(AppContext);
   const [qty, setQty] = useState(0);
   const [price, setPrice] = useState(0);
   useEffect(() => {
@@ -78,20 +79,23 @@ const Cart = () => {
                     className="btn btn-info mx-3"
                     style={{ fontWeight: "bold" }}
                     onClick={() => {
-                        addToCart(
-                          product?.productId,
-                          product.title,
-                          product.price/product.qty,
-                          1,
-                          product.imgSrc
-                        );
-                      }}
+                      addToCart(
+                        product?.productId,
+                        product.title,
+                        product.price / product.qty,
+                        1,
+                        product.imgSrc
+                      );
+                    }}
                   >
                     +
                   </button>
                   <button
                     className="btn btn-danger mx-3"
                     style={{ fontWeight: "bold" }}
+                    onClick={() => {
+                      removeFromCart(product.productId);
+                    }}
                   >
                     Remove
                   </button>
