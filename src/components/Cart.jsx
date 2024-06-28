@@ -1,11 +1,40 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/AppContext";
 
 const Cart = () => {
-  const { cart } = useContext(AppContext);
+  const { cart, decreaseQty ,addToCart} = useContext(AppContext);
+  const [qty, setQty] = useState(0);
+  const [price, setPrice] = useState(0);
+  useEffect(() => {
+    let qty = 0;
+    let price = 0;
+
+    if (cart?.items) {
+      for (let i = 0; i < cart.items?.length; i++) {
+        qty += cart.items[i].qty;
+        price += cart.items[i].price;
+      }
+    }
+    setQty(qty);
+    setPrice(price);
+  }, [cart]);
   return (
     <>
       <div style={{ marginTop: "100px" }}>
+        <div className="my-5 text-center">
+          <button
+            className="btn btn-info mx-3"
+            style={{ fontWeight: "bold", fontSize: "18px" }}
+          >
+            Total Qty :-{qty}
+          </button>
+          <button
+            className="btn btn-info mx-3"
+            style={{ fontWeight: "bold", fontSize: "18px" }}
+          >
+            Total Price :-{price}
+          </button>
+        </div>
         <div>
           {cart?.items?.map((product) => (
             <div
@@ -39,12 +68,24 @@ const Cart = () => {
                   <button
                     className="btn btn-warning mx-3"
                     style={{ fontWeight: "bold" }}
+                    onClick={() => {
+                      decreaseQty(product?.productId, 1);
+                    }}
                   >
                     -
                   </button>
                   <button
                     className="btn btn-info mx-3"
                     style={{ fontWeight: "bold" }}
+                    onClick={() => {
+                        addToCart(
+                          product?.productId,
+                          product.title,
+                          product.price/product.qty,
+                          1,
+                          product.imgSrc
+                        );
+                      }}
                   >
                     +
                   </button>
