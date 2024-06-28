@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/AppContext";
 
 const Cart = () => {
-  const { cart, decreaseQty, addToCart, removeFromCart } =
+  const { cart, decreaseQty, addToCart, removeFromCart, clearCart } =
     useContext(AppContext);
   const [qty, setQty] = useState(0);
   const [price, setPrice] = useState(0);
@@ -94,7 +94,8 @@ const Cart = () => {
                     className="btn btn-danger mx-3"
                     style={{ fontWeight: "bold" }}
                     onClick={() => {
-                      removeFromCart(product.productId);
+                      if (confirm("do you really want to delete this"))
+                        removeFromCart(product.productId);
                     }}
                   >
                     Remove
@@ -103,6 +104,30 @@ const Cart = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="container text-center">
+          {cart.items.length > 0 ? (
+            <>
+              <button
+                className="btn btn-warning mx-3 "
+                style={{ fontWeight: "bold", fontSize: "18px" }}
+              >
+                checkout
+              </button>
+              <button
+                className="btn btn-danger mx-3"
+                style={{ fontWeight: "bold", fontSize: "18px" }}
+                onClick={() => {
+                  if (confirm("tu kyu item delete kr raha hai... "))
+                    clearCart();
+                }}
+              >
+                clear cart
+              </button>
+            </>
+          ) : (
+            <h3>Cart is Empty</h3>
+          )}
         </div>
       </div>
     </>
