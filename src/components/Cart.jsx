@@ -81,8 +81,8 @@ const Cart = () => {
                     onClick={() => {
                       addToCart(
                         product?.productId,
-                        product.title,
-                        product.price / product.qty,
+                        product?.title,
+                        product?.price / product.qty,
                         1,
                         product.imgSrc
                       );
@@ -95,7 +95,7 @@ const Cart = () => {
                     style={{ fontWeight: "bold" }}
                     onClick={() => {
                       if (confirm("do you really want to delete this"))
-                        removeFromCart(product.productId);
+                        removeFromCart(product?.productId);
                     }}
                   >
                     Remove
@@ -106,7 +106,7 @@ const Cart = () => {
           ))}
         </div>
         <div className="container text-center">
-          {cart.items.length > 0 ? (
+          {cart?.items?.length > 0 ? (
             <>
               <button
                 className="btn btn-warning mx-3 "
