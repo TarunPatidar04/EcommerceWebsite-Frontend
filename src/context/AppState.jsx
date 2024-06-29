@@ -12,6 +12,7 @@ const AppState = (props) => {
   const [user, setUser] = useState();
   const [cart, setCart] = useState([]);
   const [reload, setReload] = useState(false);
+  const [userAddress, setUserAddress] = useState("");
 
   //Get all products
   useEffect(() => {
@@ -28,6 +29,7 @@ const AppState = (props) => {
     userProfile();
     fetchProducts();
     userCart();
+    getAddress();
   }, [token, reload]);
 
   useEffect(() => {
@@ -141,6 +143,7 @@ const AppState = (props) => {
         withCredentials: true,
       }
     );
+    setReload(!reload);
     // console.log(api);
     toast.success(api.data.message, {
       position: "top-right",
@@ -164,26 +167,28 @@ const AppState = (props) => {
       },
       withCredentials: true,
     });
-    setReload(!reload);
+    // setReload(!reload);
     // console.log("user cart", api.data.cart);
     setCart(api.data.cart);
     // setReload(reload);
-
   };
 
-
   //decrease quantity
-  const decreaseQty = async (productId,qty) => {
-    const api = await axios.post(`${url}/cart/--qty`,{
-      productId,
-      qty
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-        Auth: token,
+  const decreaseQty = async (productId, qty) => {
+    const api = await axios.post(
+      `${url}/cart/--qty`,
+      {
+        productId,
+        qty,
       },
-      withCredentials: true,
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Auth: token,
+        },
+        withCredentials: true,
+      }
+    );
     setReload(!reload);
     // console.log("decrease cart", api);
     // setCart(api.data.cart);
@@ -200,7 +205,6 @@ const AppState = (props) => {
       transition: Bounce,
     });
     setReload(!reload);
-
   };
 
   //remove item from cart
@@ -228,8 +232,8 @@ const AppState = (props) => {
       transition: Bounce,
     });
     setReload(!reload);
-
   };
+
   //clear  cart
   const clearCart = async () => {
     const api = await axios.delete(`${url}/cart/clear`, {
@@ -255,7 +259,59 @@ const AppState = (props) => {
       transition: Bounce,
     });
     setReload(!reload);
+  };
 
+  // Add Shipping Address
+  const shippingAddress = async (
+    fullName,
+    address,
+    city,
+    state,
+    country,
+    pincode,
+    phoneNumber
+  ) => {
+    const api = await axios.post(
+      `${url}/address/add`,
+      { fullName, address, city, state, country, pincode, phoneNumber },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Auth: token,
+        },
+        withCredentials: true,
+      }
+    );
+    setReload(!reload);
+    // console.log("decrease cart", api);
+    // setCart(api.data.cart);
+    // setReload(reload);
+    toast.success("api.data.message", {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+    return api.data;
+    setReload(!reload);
+  };
+
+  //get user latest Address
+  const getAddress = async () => {
+    const api = await axios.get(`${url}/address/get`, {
+      headers: {
+        "Content-Type": "application/json",
+        Auth: token,
+      },
+      withCredentials: true,
+    });
+    // console.log("user address: ", api.data.UserAddress);
+    setUserAddress(api.data.UserAddress);
   };
 
   return (
@@ -277,7 +333,9 @@ const AppState = (props) => {
           cart,
           decreaseQty,
           removeFromCart,
-          clearCart
+          clearCart,
+          shippingAddress,
+          userAddress,
         }}
       >
         {props.children}

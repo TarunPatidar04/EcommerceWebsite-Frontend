@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../context/AppContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cart, decreaseQty, addToCart, removeFromCart, clearCart } =
     useContext(AppContext);
+  const navigate = useNavigate();
   const [qty, setQty] = useState(0);
   const [price, setPrice] = useState(0);
   useEffect(() => {
@@ -22,20 +24,22 @@ const Cart = () => {
   return (
     <>
       <div style={{ marginTop: "100px" }}>
-        <div className="my-5 text-center">
-          <button
-            className="btn btn-info mx-3"
-            style={{ fontWeight: "bold", fontSize: "18px" }}
-          >
-            Total Qty :-{qty}
-          </button>
-          <button
-            className="btn btn-info mx-3"
-            style={{ fontWeight: "bold", fontSize: "18px" }}
-          >
-            Total Price :-{price}
-          </button>
-        </div>
+        {cart?.items?.length > 0 && (
+          <div className="my-5 text-center">
+            <button
+              className="btn btn-info mx-3"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
+              Total Qty :-{qty}
+            </button>
+            <button
+              className="btn btn-info mx-3"
+              style={{ fontWeight: "bold", fontSize: "18px" }}
+            >
+              Total Price :-{price}
+            </button>
+          </div>
+        )}
         <div>
           {cart?.items?.map((product) => (
             <div
@@ -109,6 +113,7 @@ const Cart = () => {
           {cart?.items?.length > 0 ? (
             <>
               <button
+                onClick={() => navigate("/shipping")}
                 className="btn btn-warning mx-3 "
                 style={{ fontWeight: "bold", fontSize: "18px" }}
               >
@@ -126,7 +131,11 @@ const Cart = () => {
               </button>
             </>
           ) : (
-            <h3>Cart is Empty</h3>
+            <Link to="/">
+              <button className="py-2 btn btn-warning">
+                Saman to lele bhai
+              </button>
+            </Link>
           )}
         </div>
       </div>

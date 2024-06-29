@@ -2,9 +2,11 @@ import React from 'react'
 
 const Checkout = () => {
   return (
-    <div>
+   <>
+     <div style={{marginTop:"100px"}}>
       Checkout
     </div>
+   </>
   )
 }
 
