@@ -62,3 +62,9 @@ body::-webkit-scrollbar {
 .sub_bar .items:hover{
   background-color: black;
 }
+
+
+th{
+  text-align: center;
+ vertical-align: aut0;
+}
