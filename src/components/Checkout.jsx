@@ -52,6 +52,14 @@ const Checkout = () => {
             </table>
           </div>
         </div>
+        <div className="container text-center">
+          <button
+            className="btn btn-secondary ml-3"
+            style={{ fontWeight: "bold" }}
+          >
+            Proceed to Pay
+          </button>
+        </div>
       </div>
     </>
   );

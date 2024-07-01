@@ -64,7 +64,11 @@ body::-webkit-scrollbar {
 }
 
 
-th{
+td,th{
   text-align: center;
- vertical-align: aut0;
+ vertical-align: middle;
+}
+
+td{
+  cursor: pointer;
 }
