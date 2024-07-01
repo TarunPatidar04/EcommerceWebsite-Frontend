@@ -9,9 +9,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/user/Login";
 import Profile from "./components/user/Profile";
-import Cart from './components/Cart';
+import Cart from "./components/Cart";
 import Address from "./components/Address";
-import Checkout from './components/Checkout';
+import Checkout from "./components/Checkout";
+import OrderConfirmation from "./components/OrderConfirmation";
 const App = () => {
   return (
     <>
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/shipping" element={<Address />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orderconfirmation" element={<OrderConfirmation />} />
         </Routes>
       </Router>
     </>
