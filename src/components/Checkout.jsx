@@ -3,7 +3,6 @@ import AppContext from "../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
 import TableProduct from "./TableProduct";
 import axios from "axios";
-
 const Checkout = () => {
   const navigate = useNavigate();
   const { cart, userAddress, url, user, clearCart } = useContext(AppContext);
